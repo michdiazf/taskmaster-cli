@@ -13,7 +13,20 @@ if (cmd === 'list') {
   } else {
     tasks.forEach((t, i) => {
       const icon = t.done ? '✓' : 'o';
-      console.log(`\${icon} [\${i+1}] \${t.title}`);
+      console.log(`${icon} [${i+1}] ${t.title}`);
     });
   }
+}
+
+const title = process.argv.slice(3).join(' ');
+
+if (cmd === 'add') {
+  if (!title) {
+    console.log('Uso: node index.js add <titulo>');
+    process.exit(1);
+  }
+  const tasks = readTasks();
+  tasks.push({ id: Date.now(), title, done: false });
+    writeTasks(tasks);
+    console.log(`Tarea "${title}" agregada.`);
 }
